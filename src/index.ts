@@ -28,8 +28,8 @@ async function main() {
                         try {
                             ref = current.responses[response].schema['$ref']
                         }catch{}
-
-                        const zodObject = ref ? await toZod(refs.get(ref).properties,'_'+response) : current.responses[response].properties
+                    
+                        const zodObject = await toZod(ref ? refs.get(ref).properties : current.responses[response].properties, '_'+response)
                         
                         fileContent += zodObject
                     }
