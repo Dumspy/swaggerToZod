@@ -21,7 +21,7 @@ async function main() {
                 for (const method in domainPaths[path]) {
                     const current = domainPaths[path][method]
                     const name = current.operationId
-                    let fileContent = 'import z from "zod"\n\n'
+                    let fileContent = `import z from "zod"\n\nexport const ${name} = {\n`
                     for (const response in current.responses) {
                         let ref = undefined
 
@@ -29,10 +29,11 @@ async function main() {
                             ref = current.responses[response].schema['$ref']
                         }catch{}
                     
-                        const zodObject = await toZod(ref ? refs.get(ref).properties : current.responses[response].properties, '_'+response)
+                        const zodObject = await toZod(ref ? refs.get(ref).properties : current.responses[response].properties, response)
                         
-                        fileContent += zodObject
+                        fileContent += `    ${response}: ${zodObject},\n`
                     }
+                    fileContent += '} as const'
                     await fs.writeFile(`./out/${schema.name}/${name}.ts`, fileContent)
                 }
             }

@@ -1,4 +1,4 @@
-import { format } from 'prettier';
+import { format } from "prettier";
 
 function arrayToString<T>(arr: T[]){
     return '[' + arr.map(item => `'${item}'`).join(', ') + ']';
@@ -59,5 +59,5 @@ export const toZod = async (obj: any, name: string = 'schema') => {
         }
     };
 
-    return format(`export const ${name}=${parse(obj)}`,{parser: 'babel',})
+    return parse(obj)
 };
