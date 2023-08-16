@@ -1,63 +1,60 @@
-import { format } from "prettier";
+import { refResolver } from "./refResolver";
 
-function arrayToString<T>(arr: T[]){
+function arrayToString<T>(arr: T[]) {
     return '[' + arr.map(item => `'${item}'`).join(', ') + ']';
 }
 
-const parse = (obj: any): string => {
+type parseObject = { type: string, imports?: string[] }
+
+const parse = async (obj: any): Promise<parseObject> => {
     let type = obj?.type ? obj.type : typeof obj
-    if(typeof obj?.type === 'object'){
+    if (typeof obj?.type === 'object') {
         type = typeof obj
+    }
+
+    if (obj?.$ref) {
+        const ref = await refResolver(obj.$ref)
+        return { type: ref.type, imports: [`import ${ref.type} from "./${ref.type}"`] }
     }
 
     switch (type) {
         case 'string':
-            if(obj.enum){
-                return `z.enum(${arrayToString(obj.enum)})`
+            if (obj.enum) {
+                return { type: `z.enum(${arrayToString(obj.enum)})` }
             }
-            return 'z.string()';
+            return { type: 'z.string()' }
         case 'integer':
         case 'number':
-            return 'z.number()';
-        case 'bigint':
-            return 'z.number().int()';
+            return { type: 'z.number()' }
         case 'boolean':
-            return 'z.boolean()';
+            return { type: 'z.boolean()' }
         case 'timestamp':
-            return 'z.string().datetime()'
+            return { type: 'z.string().datetime()' }
         case 'array':
-            if (Array.isArray(obj)) {
-                const options = obj
-                    .map((obj) => parse(obj))
-                    .reduce(
-                        (acc: string[], curr: string) =>
-                            acc.includes(curr) ? acc : [...acc, curr],
-                        []
-                    );
-                if (options.length === 1) {
-                    return `z.array(${options[0]})`;
-                } else if (options.length > 1) {
-                    return `z.array(z.union([${options}]))`;
-                } else {
-                    return `z.array(z.unknown())`;
-                }
+            if (obj.items.$ref) {
+                const ref = await refResolver(obj.items.$ref)
+                return { type: `z.array(${ref.type})`, imports: [`import ${ref.type} from "./${ref.type}"`] }
             }
-            return 'z.unknown()' 
-            break
+
+            const parsedItems = await parse(obj.items.type)
+            return { type: `z.array(${parsedItems.type})`, imports: [...parsedItems.imports || []] }
         case 'object':
             if (obj === null) {
-                return 'z.null()';
+                return { type: 'z.null()' }
             }
-            // @ts-ignore
-            return `z.object({${Object.entries(obj).map(([k, v]) => `'${k}':${v.properties ? parse(v.properties) : parse(v)}`)}})`;
+            const imports: string[] = []
+            return {
+                type: `z.object({${await Promise.all(Object.entries(obj).map(async ([k, v]: any) => {const parsed = v.properties ? (await parse(v.properties)) : (await parse(v));imports.push(...parsed.imports || []);return `'${k}':${parsed.type}`}))}})`,
+                imports
+            }
         case 'undefined':
-            return 'z.undefined()';
+            return { type: 'z.undefined()' }
         default:
-            console.log(type)
-            return 'z.unknown()';
+            console.log('missing case for', type)
+            return { type: 'z.unknown()' }
     }
 };
 
-export const toZod = async (obj: any) => {
+export const toZod = (obj: any) => {
     return parse(obj)
 };

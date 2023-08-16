@@ -1,21 +1,28 @@
 import SwaggerParser from "@apidevtools/swagger-parser"
-import * as fs from 'fs-extra'
+import fs from 'fs-extra'
 import { toZod } from "./objectToZod"
+import { refResolver } from "./refResolver"
 
 const swaggerSchemas = [
+    // {
+    //     'name': 'eu-1',
+    //     'url': 'https://app1.eu.monsido.com/api/docs/v1'
+    // },
     {
-          'name': 'eu-1',
-        'url': 'https://app1.eu.monsido.com/api/docs/v1'
-    },
+        'name': 'stavox',
+        'url': './swagger.json'
+    }
     // {
     //     'name': 'petstore',
-    //     'url': 'https://petstore.swagger.io/v2/swagger.json'
+    //      'url': 'https://petstore.swagger.io/v2/swagger.json'
     // }
 ] as const
 
-type refCacheObject = {type:string, import:string}
 type importBasedResponse = {response: string, type:string, import:string}
 type zodBasedResponse = {response: string, type: any}
+
+export let currentRef: SwaggerParser.$Refs | undefined = undefined
+export let currentSchema: typeof swaggerSchemas[number] | undefined = undefined
 
 async function main() {
     await fs.ensureDir('./out')
@@ -23,38 +30,22 @@ async function main() {
         await fs.ensureDir(`./out/${schema.name}`)
         await fs.ensureDir(`./out/${schema.name}/models`)
         
-        const refs = await SwaggerParser.resolve(schema.url)
-        const refValues = refs.values()
+        currentRef = await SwaggerParser.resolve(schema.url)
+        currentSchema = schema
 
-        const refCache: Record<string, refCacheObject> = {}
-        const refResolver = async (inputRef:string) => {
-            if(refCache[inputRef]){
-                return refCache[inputRef]
-            }
-            const ref = refs.get(inputRef)
-            const refName = ref.description ? ref.description.split(' ')[0] : inputRef.split('/').pop() || 'unknown'
-            const zodRef = await toZod(ref.properties)
-            await fs.writeFile(`./out/${schema.name}/models/${refName}.ts`,`import z from "zod"\n\nexport default ${zodRef}`)
-
-            refCache[inputRef] = {
-                type: refName,
-                import:`import ${refName} from "./models/${refName}"`
-            }
-
-            return refCache[inputRef]
-        }
+        const refValues = currentRef.values()
 
         for (const domain in refValues) {
             const paths = refValues[domain].paths
             for (const path in paths) {
-                console.log(path)
                 for (const method in paths[path]) {
                     const currentMethod = paths[path][method]
+
                     const importBasedResponse:  importBasedResponse[] = []
                     const zodBasedResponse: zodBasedResponse[] = []
+
                     for (const response in currentMethod.responses) {
                         const isArray = currentMethod.responses[response].schema?.type === 'array'
-                        console.log(isArray)
                         const ref = isArray ? currentMethod.responses[response].schema.items.$ref : currentMethod.responses[response].schema?.$ref || undefined
 
                         if(ref){
@@ -63,14 +54,16 @@ async function main() {
                             importBasedResponse.push({
                                 response,
                                 type: isArray ? `z.array(${resolvedRef.type})` : resolvedRef.type,
-                                import: resolvedRef.import,
+                                import: `import ${resolvedRef.type} from "./models/${resolvedRef.type}"`
                             })
                             continue
                         }
-    
+
+                        if(isArray){throw new Error('Array without ref')}
+
                         zodBasedResponse.push({
                             response: response,
-                            type: await toZod(currentMethod.responses[response].properties)
+                            type: (await toZod(currentMethod.responses[response].properties)).type
                         })
                     }
 
