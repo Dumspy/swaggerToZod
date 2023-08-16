@@ -4,9 +4,13 @@ import { toZod } from "./objectToZod"
 
 const swaggerSchemas = [
     {
-        'name': 'eu-1',
+          'name': 'eu-1',
         'url': 'https://app1.eu.monsido.com/api/docs/v1'
-    }
+    },
+    // {
+    //     'name': 'petstore',
+    //     'url': 'https://petstore.swagger.io/v2/swagger.json'
+    // }
 ] as const
 
 type refCacheObject = {type:string, import:string}
@@ -28,9 +32,8 @@ async function main() {
                 return refCache[inputRef]
             }
             const ref = refs.get(inputRef)
-            const refName = ref.description.split(' ')[0]
+            const refName = ref.description ? ref.description.split(' ')[0] : inputRef.split('/').pop() || 'unknown'
             const zodRef = await toZod(ref.properties)
-
             await fs.writeFile(`./out/${schema.name}/models/${refName}.ts`,`import z from "zod"\n\nexport default ${zodRef}`)
 
             refCache[inputRef] = {
@@ -44,25 +47,31 @@ async function main() {
         for (const domain in refValues) {
             const paths = refValues[domain].paths
             for (const path in paths) {
+                console.log(path)
                 for (const method in paths[path]) {
                     const currentMethod = paths[path][method]
                     const importBasedResponse:  importBasedResponse[] = []
                     const zodBasedResponse: zodBasedResponse[] = []
-
                     for (const response in currentMethod.responses) {
-                        try {
-                            const ref = currentMethod.responses[response].schema['$ref']
-                            
+                        const isArray = currentMethod.responses[response].schema?.type === 'array'
+                        console.log(isArray)
+                        const ref = isArray ? currentMethod.responses[response].schema.items.$ref : currentMethod.responses[response].schema?.$ref || undefined
+
+                        if(ref){
+                            const resolvedRef = await refResolver(ref)
+
                             importBasedResponse.push({
                                 response,
-                                ...(await refResolver(ref))
+                                type: isArray ? `z.array(${resolvedRef.type})` : resolvedRef.type,
+                                import: resolvedRef.import,
                             })
-                        }catch{
-                            zodBasedResponse.push({
-                                response: response,
-                                type: await toZod(currentMethod.responses[response].properties)
-                            })
-                        }            
+                            continue
+                        }
+    
+                        zodBasedResponse.push({
+                            response: response,
+                            type: await toZod(currentMethod.responses[response].properties)
+                        })
                     }
 
                     let fileContent = 'import z from "zod"\n'
