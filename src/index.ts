@@ -9,32 +9,81 @@ const swaggerSchemas = [
     }
 ] as const
 
+type refCacheObject = {type:string, import:string}
+type importBasedResponse = {response: string, type:string, import:string}
+type zodBasedResponse = {response: string, type: any}
+
 async function main() {
     await fs.ensureDir('./out')
     for (const schema of swaggerSchemas) {
         await fs.ensureDir(`./out/${schema.name}`)
+        await fs.ensureDir(`./out/${schema.name}/models`)
+        
         const refs = await SwaggerParser.resolve(schema.url)
         const refValues = refs.values()
-        for (const domain in refValues) {
-            const domainPaths = refValues[domain].paths
-            for (const path in domainPaths) {
-                for (const method in domainPaths[path]) {
-                    const current = domainPaths[path][method]
-                    const name = current.operationId
-                    let fileContent = `import z from "zod"\n\nexport const ${name} = {\n`
-                    for (const response in current.responses) {
-                        let ref = undefined
 
+        const refCache: Record<string, refCacheObject> = {}
+        const refResolver = async (inputRef:string) => {
+            if(refCache[inputRef]){
+                return refCache[inputRef]
+            }
+            const ref = refs.get(inputRef)
+            const refName = ref.description.split(' ')[0]
+            const zodRef = await toZod(ref.properties)
+
+            await fs.writeFile(`./out/${schema.name}/models/${refName}.ts`,`import z from "zod"\n\nexport default ${zodRef}`)
+
+            refCache[inputRef] = {
+                type: refName,
+                import:`import ${refName} from "./models/${refName}"`
+            }
+
+            return refCache[inputRef]
+        }
+
+        for (const domain in refValues) {
+            const paths = refValues[domain].paths
+            for (const path in paths) {
+                for (const method in paths[path]) {
+                    const currentMethod = paths[path][method]
+                    const importBasedResponse:  importBasedResponse[] = []
+                    const zodBasedResponse: zodBasedResponse[] = []
+
+                    for (const response in currentMethod.responses) {
                         try {
-                            ref = current.responses[response].schema['$ref']
-                        }catch{}
-                    
-                        const zodObject = await toZod(ref ? refs.get(ref).properties : current.responses[response].properties, response)
-                        
-                        fileContent += `    ${response}: ${zodObject},\n`
+                            const ref = currentMethod.responses[response].schema['$ref']
+                            
+                            importBasedResponse.push({
+                                response,
+                                ...(await refResolver(ref))
+                            })
+                        }catch{
+                            zodBasedResponse.push({
+                                response: response,
+                                type: await toZod(currentMethod.responses[response].properties)
+                            })
+                        }            
                     }
-                    fileContent += '} as const'
-                    await fs.writeFile(`./out/${schema.name}/${name}.ts`, fileContent)
+
+                    let fileContent = 'import z from "zod"\n'
+
+                    const uniqueImports = Array.from(new Set(importBasedResponse.map(item => item.import)));
+
+                    for (const extraImport of uniqueImports) {
+                        fileContent += extraImport + '\n'
+                    }
+
+                    fileContent += `\nexport const ${currentMethod.operationId} = {\n`
+
+                    const mergedResponses = [...importBasedResponse,...zodBasedResponse].sort((a, b) => Number(a.response) - Number(b.response)) 
+
+                    for (const type of mergedResponses) {
+                        fileContent += `    ${type.response}: ${type.type},\n`
+                    }
+
+                    fileContent += '}'
+
+                    await fs.writeFile(`./out/${schema.name}/${currentMethod.operationId}.ts`, fileContent)
                 }
             }
         }
