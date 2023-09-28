@@ -1,17 +1,21 @@
 import SwaggerParser from "@apidevtools/swagger-parser"
-import fs from 'fs-extra'
-import { toZod } from "./objectToZod"
-import { refResolver } from "./refResolver"
+import { toZod } from "./objectToZod.ts"
+import { refResolver } from "./refResolver.ts"
+import fs from 'fs/promises'
 
 const swaggerSchemas = [
-    // {
-    //     'name': 'eu-1',
-    //     'url': 'https://app1.eu.monsido.com/api/docs/v1'
-    // },
+    {
+        'name': 'eu-1',
+        'url': 'https://app1.eu.monsido.com/api/docs/v1'
+    },
     {
         'name': 'stavox',
         'url': './swagger.json'
-    }
+    },
+    // {
+    //     name: 'github',
+    //     url: 'https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/ghes-3.9/ghes-3.9.2022-11-28.json'
+    // }
     // {
     //     'name': 'petstore',
     //      'url': 'https://petstore.swagger.io/v2/swagger.json'
@@ -25,10 +29,11 @@ export let currentRef: SwaggerParser.$Refs | undefined = undefined
 export let currentSchema: typeof swaggerSchemas[number] | undefined = undefined
 
 async function main() {
-    await fs.ensureDir('./out')
+    await fs.rm('./out', { recursive: true, force: true })
+    if(!await fs.exists('./out')){ await fs.mkdir('./out') }
     for (const schema of swaggerSchemas) {
-        await fs.ensureDir(`./out/${schema.name}`)
-        await fs.ensureDir(`./out/${schema.name}/models`)
+        if(!await fs.exists(`./out/${schema.name}`)){ await fs.mkdir(`./out/${schema.name}`) }
+        if(!await fs.exists(`./out/${schema.name}/models`)){ await fs.mkdir(`./out/${schema.name}/models`) }
         
         currentRef = await SwaggerParser.resolve(schema.url)
         currentSchema = schema
@@ -90,6 +95,13 @@ async function main() {
             }
         }
     }
+
+    console.log('Done')
 }
 
-main()
+await main()
+
+let a: any = {}
+
+a.a = a
+console.log(a)

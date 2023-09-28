@@ -1,4 +1,5 @@
-import { refResolver } from "./refResolver";
+import { refResolver } from "./refResolver.ts";
+import type { refCacheObject } from "./refResolver.ts";
 
 function arrayToString<T>(arr: T[]) {
     return '[' + arr.map(item => `'${item}'`).join(', ') + ']';

@@ -1,0 +1,2997 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"XpType": {
+				"type": "string",
+				"enum": [
+					"weekly",
+					"alltime"
+				]
+			},
+			"Gangs_XP_XPType": {},
+			"adverts": {
+				"properties": {
+					"text": {
+						"type": "string",
+						"nullable": true
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"text",
+					"id"
+				],
+				"type": "object",
+				"description": "Model adverts"
+			},
+			"PickGroup": {
+				"properties": {
+					"Name": {
+						"type": "string"
+					},
+					"Plural": {
+						"type": "string"
+					},
+					"InheritFrom": {
+						"type": "string"
+					},
+					"Color": {
+						"type": "string"
+					},
+					"Singular": {
+						"type": "string"
+					},
+					"Responsibility": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"Name",
+					"Plural",
+					"InheritFrom",
+					"Color",
+					"Singular",
+					"Responsibility"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Servers": {
+				"properties": {
+					"Active": {
+						"type": "number",
+						"format": "double"
+					},
+					"ActiveSlots": {
+						"type": "number",
+						"format": "double"
+					},
+					"ServerPort": {
+						"type": "number",
+						"format": "double"
+					},
+					"ServerIP": {
+						"type": "string"
+					},
+					"ShortName": {
+						"type": "string"
+					},
+					"ServerName": {
+						"type": "string"
+					},
+					"ServerID": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"Active",
+					"ActiveSlots",
+					"ServerPort",
+					"ServerIP",
+					"ShortName",
+					"ServerName",
+					"ServerID"
+				],
+				"type": "object",
+				"description": "Model Servers"
+			},
+			"ChangesPosts": {
+				"properties": {
+					"desc": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"stamp": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"author": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"desc",
+					"title",
+					"stamp",
+					"author",
+					"id"
+				],
+				"type": "object",
+				"description": "Model ChangesPosts"
+			},
+			"ChangesPostsEdit": {
+				"properties": {
+					"desc": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title",
+					"desc"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RuleEditOpts": {
+				"properties": {
+					"additionaldesc": {
+						"type": "string"
+					},
+					"spacer": {
+						"type": "number",
+						"format": "double"
+					},
+					"rule": {
+						"type": "string"
+					},
+					"rulecat": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"rule",
+					"rulecat",
+					"spacer"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"rules_categories_type": {
+				"type": "string",
+				"enum": [
+					"job",
+					"general",
+					"rp",
+					"other"
+				]
+			},
+			"RuleCategoryEditOpts": {
+				"properties": {
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"type": {
+						"$ref": "#/components/schemas/rules_categories_type"
+					},
+					"localPriority": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"title": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RuleLine": {
+				"properties": {
+					"deleted": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"spacer": {
+						"type": "number",
+						"format": "double"
+					},
+					"editedby": {
+						"type": "string"
+					},
+					"lastchanged": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"additionaldesc": {
+						"type": "string"
+					},
+					"rule": {
+						"type": "string"
+					},
+					"rulecat": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"localLineId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"deleted",
+					"spacer",
+					"editedby",
+					"lastchanged",
+					"additionaldesc",
+					"rule",
+					"rulecat",
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RuleCategory": {
+				"properties": {
+					"localPriority": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"type": {
+						"$ref": "#/components/schemas/rules_categories_type"
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"title": {
+						"type": "string",
+						"nullable": true
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"lines": {
+						"items": {
+							"$ref": "#/components/schemas/RuleLine"
+						},
+						"type": "array"
+					},
+					"localCatId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"localPriority",
+					"type",
+					"description",
+					"title",
+					"id",
+					"lines",
+					"localCatId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PlayerSearchResult": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"steamId64": {
+						"type": "string"
+					},
+					"steamId32": {
+						"type": "string"
+					},
+					"rank": {
+						"type": "string"
+					},
+					"isPlayer": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"steamId64",
+					"steamId32",
+					"isPlayer"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CPlayerInfo": {
+				"properties": {
+					"rpName": {
+						"type": "string"
+					},
+					"steamId64": {
+						"type": "string"
+					},
+					"steamId32": {
+						"type": "string"
+					},
+					"rank": {
+						"type": "string",
+						"description": "**WARNING:** Value is cached, never use this for authentication. It SHOULD be updated if rank changes, but don't rely on it."
+					}
+				},
+				"required": [
+					"rpName",
+					"steamId64",
+					"steamId32",
+					"rank"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IPoliceForce": {
+				"properties": {
+					"SteamID": {
+						"type": "string"
+					},
+					"Rank": {
+						"type": "string"
+					},
+					"Since": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"Name": {
+						"type": "string"
+					},
+					"LastSeen": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"PlayTime": {
+						"properties": {
+							"cop": {
+								"type": "number",
+								"format": "double",
+								"nullable": true
+							}
+						},
+						"required": [
+							"cop"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"SteamID",
+					"Rank",
+					"Since",
+					"Name",
+					"LastSeen"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Police_Whitelist": {
+				"properties": {
+					"Since": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"Rank": {
+						"type": "number",
+						"format": "double"
+					},
+					"Name": {
+						"type": "string"
+					},
+					"SteamID": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"Since",
+					"Rank",
+					"Name",
+					"SteamID"
+				],
+				"type": "object",
+				"description": "Model Police_Whitelist"
+			},
+			"html_docs": {
+				"properties": {
+					"updated_by": {
+						"type": "string"
+					},
+					"updated": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"html": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"updated_by",
+					"updated",
+					"html",
+					"name"
+				],
+				"type": "object",
+				"description": "Model html_docs"
+			},
+			"E2DocsFunctions": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"returns": {
+						"type": "string"
+					},
+					"function": {
+						"type": "string"
+					},
+					"catId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"description",
+					"returns",
+					"function",
+					"catId"
+				],
+				"type": "object",
+				"description": "Model E2DocsFunctions"
+			},
+			"stores_items": {
+				"properties": {
+					"imageId": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"itemId": {
+						"type": "number",
+						"format": "double"
+					},
+					"store": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"imageId",
+					"price",
+					"category",
+					"name",
+					"itemId",
+					"store"
+				],
+				"type": "object",
+				"description": "Model stores_items"
+			},
+			"ICaseLeaderboard": {
+				"properties": {
+					"cases": {
+						"type": "number",
+						"format": "double"
+					},
+					"rating": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"cases",
+					"rating",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CaseLeaderboardOrderBy": {
+				"type": "string",
+				"enum": [
+					"cases",
+					"rating"
+				]
+			},
+			"StoredBansWithName": {
+				"properties": {
+					"Deleted": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"Unban": {
+						"type": "number",
+						"format": "double"
+					},
+					"Timestamp": {
+						"type": "number",
+						"format": "double"
+					},
+					"AdminID": {
+						"type": "string"
+					},
+					"ServerID": {
+						"type": "number",
+						"format": "double"
+					},
+					"Reason": {
+						"type": "string"
+					},
+					"Type": {
+						"type": "string"
+					},
+					"SteamID": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"Name": {
+						"type": "string"
+					},
+					"AdminName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"Deleted",
+					"Unban",
+					"Timestamp",
+					"AdminID",
+					"ServerID",
+					"Reason",
+					"Type",
+					"SteamID",
+					"id",
+					"Name",
+					"AdminName"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BansOrderBy": {
+				"type": "string",
+				"enum": [
+					"Timestamp",
+					"Unban"
+				]
+			},
+			"PunishmentDetails": {
+				"properties": {
+					"Deleted": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"Unban": {
+						"type": "number",
+						"format": "double"
+					},
+					"Timestamp": {
+						"type": "number",
+						"format": "double"
+					},
+					"AdminID": {
+						"type": "string"
+					},
+					"ServerID": {
+						"type": "number",
+						"format": "double"
+					},
+					"Reason": {
+						"type": "string"
+					},
+					"Type": {
+						"type": "string"
+					},
+					"SteamID": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"Admin": {
+						"properties": {
+							"SteamID": {
+								"type": "string"
+							},
+							"Name": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"SteamID",
+							"Name"
+						],
+						"type": "object"
+					},
+					"CanHide": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"Deleted",
+					"Unban",
+					"Timestamp",
+					"AdminID",
+					"ServerID",
+					"Reason",
+					"Type",
+					"SteamID",
+					"id",
+					"CanHide"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"user": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			},
+			"development": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			}
+		}
+	},
+	"info": {
+		"title": "",
+		"version": "0.0.8",
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/account/me": {
+			"get": {
+				"operationId": "GetMe",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"PlayerData": {
+											"properties": {
+												"BankAmount": {
+													"type": "number",
+													"format": "double"
+												},
+												"Money": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"BankAmount",
+												"Money"
+											],
+											"type": "object"
+										},
+										"DiscordBoosting": {
+											"type": "boolean"
+										},
+										"FirstSeen": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"ConditionedUnban": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"CasePenalty": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"LastSeen": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"PlayTime": {
+											"type": "number",
+											"format": "double"
+										},
+										"VIPExpire": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"VIPStatus": {
+											"type": "number",
+											"format": "double"
+										},
+										"Rank": {
+											"type": "string"
+										},
+										"Name": {
+											"type": "string"
+										},
+										"PoliceWhitelist": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"PlayerData",
+										"DiscordBoosting",
+										"FirstSeen",
+										"ConditionedUnban",
+										"CasePenalty",
+										"LastSeen",
+										"PlayTime",
+										"VIPExpire",
+										"VIPStatus",
+										"Rank",
+										"Name",
+										"PoliceWhitelist"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Account"
+				],
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/gangs": {
+			"get": {
+				"operationId": "getGangs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"Owner": {
+												"properties": {
+													"Name": {
+														"type": "string"
+													},
+													"SteamID": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"Name",
+													"SteamID"
+												],
+												"type": "object"
+											},
+											"_count": {
+												"properties": {
+													"Gang_Members": {
+														"type": "number",
+														"format": "double"
+													}
+												},
+												"required": [
+													"Gang_Members"
+												],
+												"type": "object"
+											},
+											"Name": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"Owner",
+											"_count",
+											"Name"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gang"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/gangs/leaderboard/{type}/{limit}": {
+			"get": {
+				"operationId": "getGangLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"experience": {
+												"type": "number",
+												"format": "double"
+											},
+											"name": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"experience",
+											"name"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gang"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "type",
+						"required": true,
+						"schema": {
+							"$ref": "#/components/schemas/XpType"
+						}
+					},
+					{
+						"in": "path",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/gangs/my": {
+			"get": {
+				"operationId": "getMyGang",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"Gang": {
+											"properties": {
+												"MOTD": {
+													"type": "string"
+												},
+												"id": {
+													"type": "number",
+													"format": "double"
+												},
+												"GangRanks": {
+													"items": {
+														"properties": {
+															"RankID": {
+																"type": "number",
+																"format": "double"
+															},
+															"Name": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"RankID",
+															"Name"
+														],
+														"type": "object"
+													},
+													"type": "array"
+												},
+												"Xp": {
+													"items": {
+														"properties": {
+															"WeeklyAmount": {
+																"type": "number",
+																"format": "double"
+															},
+															"XPType": {
+																"$ref": "#/components/schemas/Gangs_XP_XPType"
+															}
+														},
+														"required": [
+															"WeeklyAmount",
+															"XPType"
+														],
+														"type": "object"
+													},
+													"type": "array"
+												},
+												"Gang_Members": {
+													"items": {
+														"properties": {
+															"Player": {
+																"properties": {
+																	"LastSeen": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"Name": {
+																		"type": "string"
+																	},
+																	"SteamID": {
+																		"type": "string"
+																	}
+																},
+																"required": [
+																	"LastSeen",
+																	"Name",
+																	"SteamID"
+																],
+																"type": "object"
+															},
+															"Rank": {
+																"type": "number",
+																"format": "double"
+															}
+														},
+														"required": [
+															"Player",
+															"Rank"
+														],
+														"type": "object"
+													},
+													"type": "array"
+												},
+												"Name": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"MOTD",
+												"id",
+												"GangRanks",
+												"Xp",
+												"Gang_Members",
+												"Name"
+											],
+											"type": "object"
+										}
+									},
+									"required": [
+										"Gang"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gang"
+				],
+				"security": [
+					{
+						"user": [
+							"region.gangmember"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/scopes": {
+			"get": {
+				"operationId": "getRegionScopes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/information/adverts": {
+			"get": {
+				"operationId": "getAdverts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/adverts"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "createAdvert",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"text": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"text"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/information/adverts/{id}": {
+			"patch": {
+				"operationId": "updateAdvert",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"text": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"text"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "deleteAdvert",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/information/getOrderedGroups": {
+			"get": {
+				"operationId": "getOrderedGroups",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PickGroup"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/information/getStaffs": {
+			"get": {
+				"operationId": "getStaffs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"forumId": {
+												"type": "number",
+												"format": "double"
+											},
+											"steamId": {
+												"type": "string"
+											},
+											"rank": {
+												"type": "string"
+											},
+											"name": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"forumId",
+											"steamId",
+											"rank",
+											"name"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/information/vehicles": {
+			"get": {
+				"operationId": "getVehicles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"count": {
+												"type": "number",
+												"format": "double"
+											},
+											"limitedEdition": {
+												"type": "number",
+												"format": "double"
+											},
+											"name": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"count",
+											"limitedEdition",
+											"name"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/information/servers": {
+			"get": {
+				"operationId": "getServers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Servers"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/information/news": {
+			"get": {
+				"operationId": "GetNews",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ChangesPosts"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "createNews",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.newsmanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ChangesPostsEdit"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/information/news/ssr/{steamId}": {
+			"get": {
+				"operationId": "getNewsSSR",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"text/html; charset=utf-8": {
+								"schema": {
+									"type": "number",
+									"enum": [
+										null
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "steamId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/information/news/{id}": {
+			"patch": {
+				"operationId": "updateNews",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.newsmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ChangesPostsEdit"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "deleteNews",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.newsmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/information/rules": {
+			"post": {
+				"operationId": "createRule",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RuleEditOpts"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "getRules",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RuleCategory"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/information/rules/{id}": {
+			"patch": {
+				"operationId": "updateRule",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RuleEditOpts"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "deleteRule",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/information/rules/categories": {
+			"post": {
+				"operationId": "createRuleCategory",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RuleCategoryEditOpts"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/information/rules/categories/{id}": {
+			"patch": {
+				"operationId": "updateRuleCategory",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RuleCategoryEditOpts"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "deleteRuleCategory",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/information/rules/ssr": {
+			"get": {
+				"operationId": "getRulesSSR",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"text/html; charset=utf-8": {
+								"schema": {
+									"type": "number",
+									"enum": [
+										null
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Information"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/misc/searchPlayers": {
+			"get": {
+				"operationId": "searchPlayers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PlayerSearchResult"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Misc"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "query",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/misc/getPlayerNames": {
+			"get": {
+				"operationId": "getPlayerNames",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CPlayerInfo"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Misc"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "steamIds",
+						"required": true,
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
+				]
+			}
+		},
+		"/police/force": {
+			"get": {
+				"operationId": "GetPoliceForce",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IPoliceForce"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "hireOfficer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Police_Whitelist"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [
+					{
+						"user": [
+							"region.police.edit"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"steamId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"steamId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/police/force/{steamId}": {
+			"patch": {
+				"operationId": "updateOfficer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [
+					{
+						"user": [
+							"region.police.edit"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "steamId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"rankId": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"rankId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "demoteOfficer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [
+					{
+						"user": [
+							"region.police.edit"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "steamId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/police/me/permissions": {
+			"get": {
+				"operationId": "GetMyPermissions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"ranks": {
+											"items": {
+												"properties": {
+													"name": {
+														"type": "string"
+													},
+													"id": {
+														"type": "number",
+														"format": "double"
+													}
+												},
+												"required": [
+													"name",
+													"id"
+												],
+												"type": "object"
+											},
+											"type": "array"
+										},
+										"myRank": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"ranks",
+										"myRank"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [
+					{
+						"user": [
+							"region.police.edit"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/police/trafficlaws": {
+			"get": {
+				"operationId": "GetTrafficLaws",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/html_docs"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"patch": {
+				"operationId": "UpdateTrafficLaws",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/html_docs"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"html": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"html"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/police/policelaws": {
+			"get": {
+				"operationId": "GetPoliceLaws",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/html_docs"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"patch": {
+				"operationId": "UpdatePoliceLaws",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/html_docs"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Police"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staffmanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"html": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"html"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/scripting/docs": {
+			"get": {
+				"operationId": "getDocs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"Functions": {
+												"items": {
+													"$ref": "#/components/schemas/E2DocsFunctions"
+												},
+												"type": "array"
+											},
+											"Description": {
+												"type": "string"
+											},
+											"Title": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"Functions",
+											"Description",
+											"Title"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Scripting"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/scripting/products": {
+			"get": {
+				"operationId": "getProducts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"Products": {
+												"items": {
+													"$ref": "#/components/schemas/stores_items"
+												},
+												"type": "array"
+											},
+											"Store": {}
+										},
+										"required": [
+											"Products",
+											"Store"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Scripting"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/staff/myCases": {
+			"get": {
+				"operationId": "getMyCases",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"userGraph": {
+											"items": {
+												"properties": {
+													"date": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"cases": {
+														"type": "number",
+														"format": "double"
+													}
+												},
+												"required": [
+													"date",
+													"cases"
+												],
+												"type": "object"
+											},
+											"type": "array"
+										},
+										"weekly": {
+											"properties": {
+												"activeStaffs": {
+													"type": "number",
+													"format": "double"
+												},
+												"totalCases": {
+													"type": "number",
+													"format": "double"
+												},
+												"casesForNextRank": {
+													"type": "number",
+													"format": "double"
+												},
+												"cases": {
+													"type": "number",
+													"format": "double"
+												},
+												"rank": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"activeStaffs",
+												"totalCases",
+												"casesForNextRank",
+												"cases",
+												"rank"
+											],
+											"type": "object"
+										},
+										"daily": {
+											"properties": {
+												"cases": {
+													"type": "number",
+													"format": "double"
+												}
+											},
+											"required": [
+												"cases"
+											],
+											"type": "object"
+										}
+									},
+									"required": [
+										"userGraph",
+										"weekly",
+										"daily"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staff"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/staff/cases/leaderboard": {
+			"get": {
+				"operationId": "getCaseLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"totalCount": {
+											"type": "number",
+											"format": "double"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/ICaseLeaderboard"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"totalCount",
+										"data"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staff"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/CaseLeaderboardOrderBy"
+						}
+					},
+					{
+						"in": "query",
+						"name": "desc",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			}
+		},
+		"/staff/bans": {
+			"get": {
+				"operationId": "getBans",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"count": {
+											"type": "number",
+											"format": "double"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/StoredBansWithName"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"count",
+										"data"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staff"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orderBy",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/BansOrderBy"
+						}
+					},
+					{
+						"in": "query",
+						"name": "desc",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			}
+		},
+		"/staff/newplayers": {
+			"get": {
+				"operationId": "getNewPlayers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"count": {
+											"type": "number",
+											"format": "double"
+										},
+										"data": {
+											"items": {
+												"properties": {
+													"FirstSeen": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"LastSeen": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"PlayTime": {
+														"type": "number",
+														"format": "double"
+													},
+													"Name": {
+														"type": "string"
+													},
+													"SteamID": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"FirstSeen",
+													"LastSeen",
+													"PlayTime",
+													"Name",
+													"SteamID"
+												],
+												"type": "object"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"count",
+										"data"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staff"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/staff/lookup/getplayer/{steamId}": {
+			"get": {
+				"operationId": "getPlayer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"Gang": {
+											"properties": {
+												"id": {
+													"type": "number",
+													"format": "double"
+												},
+												"Name": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"id",
+												"Name"
+											],
+											"type": "object"
+										},
+										"BanIsLocked": {
+											"type": "number",
+											"format": "double"
+										},
+										"BanServerID": {
+											"type": "number",
+											"format": "double"
+										},
+										"BanModifiedTime": {
+											"type": "number",
+											"format": "double"
+										},
+										"BanModifiedAdminRank": {},
+										"BanModifiedAdminName": {},
+										"BanModifiedAdminID": {
+											"type": "string"
+										},
+										"BanWasModified": {
+											"type": "boolean"
+										},
+										"BanTime": {
+											"type": "number",
+											"format": "double"
+										},
+										"BanUnban": {
+											"type": "number",
+											"format": "double"
+										},
+										"BanAdminRank": {},
+										"BanAdminName": {},
+										"BanAdminID": {
+											"type": "string"
+										},
+										"BanReason": {
+											"type": "string"
+										},
+										"IsBanned": {
+											"type": "boolean"
+										},
+										"EconomyFrozenBy": {},
+										"EconomyFrozenBySteam": {},
+										"IsEconomyFrozen": {
+											"type": "boolean"
+										},
+										"SteamID": {
+											"type": "string"
+										},
+										"Rank": {
+											"type": "string"
+										},
+										"LastSeen": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"PlayTime": {
+											"type": "number",
+											"format": "double"
+										},
+										"VIPStatus": {
+											"type": "number",
+											"format": "double"
+										},
+										"LastPCIDUnhashed": {
+											"type": "string"
+										},
+										"LastIPUnhashed": {
+											"type": "string"
+										},
+										"LastPCID": {},
+										"LastIP": {},
+										"CasePenalty": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"Name": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"Gang",
+										"BanIsLocked",
+										"BanServerID",
+										"BanModifiedTime",
+										"BanModifiedAdminRank",
+										"BanModifiedAdminName",
+										"BanModifiedAdminID",
+										"BanWasModified",
+										"BanTime",
+										"BanUnban",
+										"BanAdminRank",
+										"BanAdminName",
+										"BanAdminID",
+										"BanReason",
+										"IsBanned",
+										"EconomyFrozenBy",
+										"EconomyFrozenBySteam",
+										"IsEconomyFrozen",
+										"SteamID",
+										"Rank",
+										"LastSeen",
+										"PlayTime",
+										"VIPStatus",
+										"LastPCIDUnhashed",
+										"LastIPUnhashed",
+										"LastPCID",
+										"LastIP",
+										"CasePenalty",
+										"Name"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staff"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "steamId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/staff/lookup/punishmentHistory/{steamId}": {
+			"get": {
+				"operationId": "getPunishmentHistory",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"totalCount": {
+											"type": "number",
+											"format": "double"
+										},
+										"data": {
+											"items": {
+												"$ref": "#/components/schemas/PunishmentDetails"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"totalCount",
+										"data"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "steamId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/staff/lookup/hidePunishment/{id}": {
+			"post": {
+				"operationId": "hidePunishment",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.staff"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/staff/lookup/giveCasePenalty": {
+			"post": {
+				"operationId": "giveCasePenalty",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.servermanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"steamId": {
+										"type": "string"
+									},
+									"toDate": {
+										"type": "string"
+									},
+									"reason": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"steamId",
+									"reason"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/staff/lookup/freezeEconomy": {
+			"post": {
+				"operationId": "freezeEconomy",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.servermanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"steamId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"steamId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/staff/lookup/unFreezeEconomy": {
+			"post": {
+				"operationId": "unFreezeEconomy",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Staff"
+				],
+				"security": [
+					{
+						"user": [
+							"region.servermanagement"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"steamId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"steamId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
